@@ -1,0 +1,40 @@
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    findAll(criteria: UserCriteria!): [User]
+    findOne(id: Int!): User
+}
+
+type Mutation {
+    create(user: UserInput!): User
+    update(user: UserInput!): User
+    delete(id: Int!): Boolean
+}
+
+type User {
+    id: Int!
+    firstName: String!
+    lastName: String!
+    salary: Int
+    birthDate: Date!
+}
+
+input UserCriteria {
+    firstName: String
+    lastName: String
+    salary: Int
+    birthDate: Date
+}
+
+input UserInput {
+    id: Int
+    firstName: String!
+    lastName: String!
+    salary: Int
+    birthDate: Date!
+}
+
+scalar Date
