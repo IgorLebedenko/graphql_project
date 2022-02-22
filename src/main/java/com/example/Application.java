@@ -20,9 +20,14 @@ public class Application {
     }
 
     @Bean
-    public SchemaParserOptions schemaParserOptions(){
+    public SchemaParserOptions schemaParserOptions() {
         return SchemaParserOptions.newOptions().objectMapperConfigurer((mapper, context) -> {
             mapper.registerModule(new JavaTimeModule());
         }).build();
     }
+
+//    @Bean
+//    public SchemaParserDictionary schemaParserDictionary() {
+//        return new SchemaParserDictionary().add(Sort.Direction.class);
+//    }
 }

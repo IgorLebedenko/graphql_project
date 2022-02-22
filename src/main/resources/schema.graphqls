@@ -9,8 +9,10 @@ type Query {
 }
 
 type Mutation {
-    create(user: UserInput!): User
-    update(user: UserInput!): User
+    create(input: UserInput!): User
+    create(firstName: String!, lastName: String!, birthDate: Date!): User
+    update(id: Int!, input: UserInput!): User
+    update(id: Int!, firstName: String!, lastName: String!, birthDate: Date!): User
     delete(id: Int!): Boolean
 }
 
@@ -22,15 +24,28 @@ type User {
     birthDate: Date!
 }
 
+enum Direction {
+    ASC
+    DESC
+}
+
 input UserCriteria {
     firstName: String
     lastName: String
     salary: Int
     birthDate: Date
+    page: Int
+    size: Int
+    sortedBy: String
+    sortDirection: Direction
+}
+
+input Sort {
+    property: String!
+    direction: Direction!
 }
 
 input UserInput {
-    id: Int
     firstName: String!
     lastName: String!
     salary: Int

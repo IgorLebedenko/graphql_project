@@ -7,9 +7,12 @@ import com.example.repository.UserRepository;
 import com.example.specification.UserSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.ws.rs.NotFoundException;
+import java.util.Collections;
+import java.util.Objects;
 
 @Service
 public class UserService {
@@ -19,6 +22,10 @@ public class UserService {
 
 
     public Page<User> findAll(UserCriteria criteria) {
+        if (criteria.getSortedBy() != null) {
+            Sort.Order order = new Sort.Order(Objects.requireNonNullElse(criteria.getSortDirection(), Sort.DEFAULT_DIRECTION) , criteria.getSortedBy());
+            criteria.setOrders(Collections.singletonList(order));
+        }
         final Page<UserEntity> users = repository.findAll(new UserSpecification(criteria), criteria);
         return users.map(this::model);
     }
